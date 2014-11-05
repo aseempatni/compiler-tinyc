@@ -8,11 +8,14 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include "y.tab.h"
 #define size_of_char 		1
 #define size_of_int  		4
 #define size_of_double		8
 #define size_of_pointer		4
+
+#define debug(x) do { \
+  if (gDebug) { cerr << x << std::endl; } \
+} while (0)
 
 extern  char* yytext;
 extern  int yyparse();
@@ -20,97 +23,172 @@ extern  int yyparse();
 using namespace std;
 
 /********* Forward Declarations ************/
-class sym;												// Entry in a symbol table
-class symtab;											// Symbol Table
+
+class sym;						// Entry in a symbol table
+class symtab;					// Symbol Table
 class quad;
 class quads;
+class boolexp;
 
-/************** enum types *****************/
+/************** Enum types *****************/
 
-enum type_e {_VOID, _CHAR, _INT, _DOUBLE, PTR, ARR, FUNC}; 	// Type enumeration
-enum op_t {PLUS=1000, SUB, MULT, DIVIDE};
+enum type_e {	// Type enumeration
+_VOID, _CHAR, _INT, _DOUBLE, PTR, ARR, FUNC}; 	
+enum optype { EQUAL, 
+INOR, LT, GT, LE, GE, GOTOOP, _RETURN, EQOP, NEOP,
+ADD, SUB, MULT, DIVIDE, RIGHTOP, LEFTOP, MODOP,
+// Unary Operators
+UMINUS, UPLUS, ADDRESS, RIGHT_POINTER, BNOT, LNOT,
+
+BAND, XOR, 
+// PTR Assign
+PTRL, PTRR,
+// ARR Assign
+ARRR, ARRL,
+// Function call
+PARAM, CALL
+};
 
 /********** Class Declarations *************/
-class symtype {
+
+class symtype { // Type of an element in symbol table
 public:
-	symtype(type_e cat, symtype* ptr = NULL, int size = 1): 
-		cat(cat), 
-		ptr (ptr), 
-		size(size) {};
+	symtype(type_e cat, symtype* ptr = NULL, int width = 1);
 	type_e cat;
-	int size;					// Size of array
+	int width;					// Size of array
 	symtype* ptr;				// Array -> array of ptr type; pointer-> pointer to ptr type 
+
 	friend ostream& operator<<(ostream&, const symtype);
 };
 
-class symtab {
+class sym { // Row in a Symbol Table
 public:
-	string tname;
-	symtab (string name): 
-		tname (name), 
-		tcount(0), 
-		offset (0) {};
-	int tcount;											// Count of temporary variables
-	int offset;
-	vector <sym> table; 								// The table of symbols
-	sym* lookup (string name);							// Lookup for a symbol in symbol table
-	sym* gentemp (type_e t, symtype* ptr = NULL, int size = 0);						// Generate a temporary variable and insert it in symbol table
-	void print();										// Print the symbol table
-	sym& update(string, int size, symtab* = NULL); 
-};
-class sym {
-public:
-	string name;
-	symtype *type;
-	string init;
-	int size;
-	int offset;
-	symtab* nest;
-	sym (string name, type_e t=_INT, symtype* ptr = NULL, int size = 0):
-		name(name)  {
-		type = new symtype (symtype(t, ptr, size));
-	};
+	string name;				// Name of symbol
+	symtype *type;				// Type of Symbol
+	string init;				// Symbol initialisation
+	string category;			// local, temp or global
+	int size;					// Size of the type of symbol
+	int offset;					// Offset of symbol computed at the end
+	symtab* nest;				// Pointer to nested symbol table
+
+	sym (string, type_e t=_INT, symtype* ptr = NULL, int width = 0);
+	sym* update(symtype * t); 	// Update using type object and nested table pointer
+	sym* update(type_e t); 		// Update using raw type and nested table pointer
+	sym* initialize (string);
 	friend ostream& operator<<(ostream&, const sym*);
+	sym* linkst(symtab* t);
 };
-class quad {
+
+class symtab { // Symbol Table
 public:
-	quad (string result, string arg1, int op = 0, string arg2 = NULL);
-	int op;
-	string result;
-	string arg1;
-	string arg2;
-	void print ();
-	void update (int addr) {
-		this ->result = addr;
-	}
+	string tname;				// Name of Table
+	int tcount;					// Count of temporary variables
+	list <sym> table; 			// The table of symbols
+
+	symtab (string name="");
+	sym* lookup (string name);					// Lookup for a symbol in symbol table
+	void print();								// Print the symbol table
+	void printall();							// Print symbol table of functions also
+	void computeOffsets();						// Compute offset of the whole symbol table recursively
 };
-class quads {
+
+sym* gentemp (type_e t=_INT, string init = "");	// Generate a temporary variable and insert it in symbol table
+sym* gentemp (symtype* t, string init = "");	// Generate a temporary variable and insert it in symbol table
+
+class quad { // Individual Quad
 public:
-	vector <quad> array;;
-	void print ();	
-	void printtab();
-	void backpatch (list <int>, int);
-	void emit(string result, string arg1, int op = 0, string arg2 = NULL);
+	optype op;					// Operator
+	string result;				// Result
+	string arg1;				// Argument 1
+	string arg2;				// Argument 2
+
+	void print ();								// Print Quads
+	void update (int addr);						// Used for backpatching address
+	quad (string result, string arg1, optype op = EQUAL, string arg2 = "");
+	quad (string result, int arg1, optype op = EQUAL, string arg2 = "");
 };
-class Singleton {
+
+class quads { // Quad Array
+public:
+	vector <quad> array;;		// Vector of quads
+
+	quads () {array.reserve(300);}
+	void print ();								// Print all the quads
+	void printtab();							// Print quads in tabular form
+};
+
+void backpatch (list <int>, int);
+void emit(optype opL, string result, string arg1="", string arg2 = "");
+void emit(optype op, string result, int arg1, string arg2 = "");
+
+class Singleton {	// Global Symbol Table is Singleton Object
 public:
    static Singleton* GetInstance();
 private:
    Singleton();
-   static Singleton* pSingleton;						// singleton instance
+   static Singleton* pSingleton;					// singleton instance
 };
 
 /*********** Function Declarations *********/
-list<int> makelist (int);
-list<int> merge (list<int> &, list <int> &);
 
-int sizeoftype (symtype);
-string to_string (const symtype*);
-string optostr(int);
 typedef list<int> lint;
+list<int> makelist (int);							// Make a new list contaninig an integer
+list<int> merge (list<int> &, list <int> &);		// Merge two lists
+
+int sizeoftype (symtype*);							// Calculate size of any type
+string convert_to_string (const symtype*);			// For printing type structure
+string optostr(int);
+
+bool typecheck(sym* s1, sym* s2);					// Checks if two symbbol table entries have same type
+bool typecheck(symtype* s1, symtype* s2);			// Check if the type objects are equivalent
+
+int nextinstr();									// Returns the address of the next instruction
+string NumberToString(int);							// Converts a number to string mainly used for storing numbers
+
+void changeTable (symtab* newtable);
 
 /*** Global variables declared in cxx file****/
-extern symtab table;									// Global Symbbol Table
-extern quads qarr;												// Quads
 
+extern symtab* table;								// Current Symbbol Table
+extern symtab* gTable;								// Global Symbbol Table
+extern quads qarr;									// Quads
+extern sym* currsym;								// Pointer to just encountered symbol
+
+/** Attributes/Global for Boolean Expression***/
+
+struct expr {
+	bool isbool;		// Boolean variable that stores if the expression is bool
+
+	// Valid for non-bool type
+	sym* symp;			// Pointer to the symbol table entry
+
+	// Valid for bool type
+	lint truelist;		// Truelist valid for boolean
+	lint falselist;		// Falselist valid for boolean expressions
+
+	// Valid for statement expression
+	lint nextlist;
+};
+
+struct statement {
+	lint nextlist;		// Nextlist for statement
+};
+
+struct unary {
+	type_e cat;
+	sym* loc;			// Temporary used for computing array address
+	sym* symp;			// Pointer to symbol table
+	symtype* type;		// type of the subarray generated
+};
+
+// Utility functions
+template <typename T> string tostr(const T& t) { 
+   ostringstream os; 
+   os<<t; 
+   return os.str(); 
+} 
+
+expr* convert2bool (expr*);			// convert any expression to bool
+// For debugging 
+void printlist (lint list);			// Print the list of integers
 #endif

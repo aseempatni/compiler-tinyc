@@ -1,7 +1,8 @@
 %{
+#include "ass4_12CS10008_translator.h"
+
 #include "y.tab.h"
 #include <math.h>
-#include "ass4_12CS10008_translator.h"
 void yyerror (char *);  /* prints grammar violation message */
 void count(void);
 void comment (void);
@@ -70,13 +71,14 @@ WS  				[ \t\v\n\f]
 "_Complex"      { return COMPLEX; }
 "_Imaginary"    { return IMAGINARY; }
 
-
-{SC} 			{ return STRING_LITERAL; }
-{ID}			{	yylval.symp = table.lookup(yytext);
+{SC} 			{ 	yylval.strval = yytext;
+					return STRING_LITERAL; }
+{ID}			{	yylval.symp = table->lookup(yytext);
 					return IDENTIFIER;  }
 {IC} 			{ 	yylval.intval = atoi(yytext);
 					return INT_CONSTANT; }
-{FC} 			{ return FLOAT_CONSTANT; }
+{FC} 			{ 	yylval.strval = yytext;
+					return FLOAT_CONSTANT; }
 {CC} 			{ return CHAR_CONSTANT; }
 
 "["				{ return '['; }
