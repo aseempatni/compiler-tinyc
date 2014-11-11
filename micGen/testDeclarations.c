@@ -1,5 +1,5 @@
-// Declaration Phase
-
+// Test Declaration
+int test = 2;
 double d = 2.3;
 int i, w[10];
 int a = 4, *p, b;

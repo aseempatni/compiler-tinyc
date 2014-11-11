@@ -1,0 +1,234 @@
+Input file is test1.c
+Assembly file generated is test1.s
+Quads and Symbol Table are stored in quad.log
+
+================================================================================
+Symbol Table: Global                                         Parent: null
+--------------------------------------------------------------------------------
+Name            Type            Category    Init Val    Size    Offset  Nest
+--------------------------------------------------------------------------------
+prints          int             function                4       0       prints
+printi          int             function                4       4       printi
+readi           int             function                4       8       readi
+main            int             function                4       12      main
+--------------------------------------------------------------------------------
+
+================================================================================
+Symbol Table: prints                                         Parent: Global
+--------------------------------------------------------------------------------
+Name            Type            Category    Init Val    Size    Offset  Nest
+--------------------------------------------------------------------------------
+c               ptr(char)       param       ...         4       0       null
+retVal          int             local                   4       4       null
+--------------------------------------------------------------------------------
+
+================================================================================
+Symbol Table: printi                                         Parent: Global
+--------------------------------------------------------------------------------
+Name            Type            Category    Init Val    Size    Offset  Nest
+--------------------------------------------------------------------------------
+i               int             param                   4       0       null
+retVal          int             local                   4       4       null
+--------------------------------------------------------------------------------
+
+================================================================================
+Symbol Table: readi                                          Parent: Global
+--------------------------------------------------------------------------------
+Name            Type            Category    Init Val    Size    Offset  Nest
+--------------------------------------------------------------------------------
+eP              ptr(int)        param                   4       0       null
+retVal          int             local                   4       4       null
+--------------------------------------------------------------------------------
+
+================================================================================
+Symbol Table: main                                           Parent: Global
+--------------------------------------------------------------------------------
+Name            Type            Category    Init Val    Size    Offset  Nest
+--------------------------------------------------------------------------------
+retVal          int             local                   4       0       null
+array           arr(100, int)   local                   400     4       null
+t00             int             temp        100         4       404     null
+n               int             local                   4       408     null
+c               int             local                   4       412     null
+d               int             local                   4       416     null
+swap            int             local                   4       420     null
+eP              int             local                   4       424     null
+prints          int             local                   4       428     null
+t01             ptr(char)       temp        ...         4       432     null
+t02             int             temp                    4       436     null
+readi           int             local                   4       440     null
+t03             ptr(int)        temp                    4       444     null
+t04             int             temp                    4       448     null
+t05             int             temp                    4       452     null
+t06             ptr(char)       temp        ...         4       456     null
+t07             int             temp                    4       460     null
+printi          int             local                   4       464     null
+t08             int             temp                    4       468     null
+t09             ptr(char)       temp        ...         4       472     null
+t10             int             temp                    4       476     null
+t11             int             temp        1           4       480     null
+t12             int             temp                    4       484     null
+t13             int             temp                    4       488     null
+t14             int             temp                    4       492     null
+t15             int             temp        1           4       496     null
+t16             int             temp                    4       500     null
+t17             int             temp                    4       504     null
+t18             int             temp                    4       508     null
+t19             ptr(int)        temp                    4       512     null
+t20             int             temp                    4       516     null
+t21             int             temp                    4       520     null
+t22             int             temp        1           4       524     null
+t23             int             temp                    4       528     null
+t24             int             temp                    4       532     null
+t25             int             temp                    4       536     null
+t26             int             temp        1           4       540     null
+t27             int             temp                    4       544     null
+t28             int             temp                    4       548     null
+t29             int             temp                    4       552     null
+t30             int             temp                    4       556     null
+t31             int             temp                    4       560     null
+t32             int             temp        1           4       564     null
+t33             int             temp                    4       568     null
+t34             int             temp                    4       572     null
+t35             int             temp                    4       576     null
+t36             int             temp                    4       580     null
+t37             int             temp                    4       584     null
+t38             int             temp                    4       588     null
+t39             int             temp                    4       592     null
+t40             int             temp        1           4       596     null
+t41             int             temp                    4       600     null
+t42             int             temp                    4       604     null
+t43             int             temp                    4       608     null
+t44             int             temp                    4       612     null
+t45             int             temp                    4       616     null
+t46             int             temp        1           4       620     null
+t47             int             temp                    4       624     null
+t48             int             temp                    4       628     null
+t49             int             temp                    4       632     null
+t50             int             temp                    4       636     null
+t51             int             temp                    4       640     null
+t52             int             temp                    4       644     null
+t53             int             temp                    4       648     null
+t54             int             temp                    4       652     null
+t55             ptr(char)       temp        ...         4       656     null
+t56             int             temp                    4       660     null
+t57             int             temp        1           4       664     null
+t58             int             temp                    4       668     null
+t59             int             temp                    4       672     null
+t60             int             temp                    4       676     null
+t61             int             temp        1           4       680     null
+t62             int             temp                    4       684     null
+t63             int             temp                    4       688     null
+t64             int             temp                    4       692     null
+t65             int             temp                    4       696     null
+t66             int             temp                    4       700     null
+t67             ptr(char)       temp        ...         4       704     null
+t68             int             temp                    4       708     null
+t69             ptr(char)       temp        ...         4       712     null
+t70             int             temp                    4       716     null
+t71             int             temp        0           4       720     null
+--------------------------------------------------------------------------------
+
+==============================
+Quad Translation
+------------------------------
+
+main: 
+
+	1   :	t00 = 100
+	2   :	op
+	3   :	param t01
+	4   :	t02 = call prints, 1
+	5   :	t03 = &eP
+	6   :	param t03
+	7   :	t04 = call readi, 1
+	8   :	n = t04
+	9   :	op
+	10  :	param t06
+	11  :	t07 = call prints, 1
+	12  :	param n
+	13  :	t08 = call printi, 1
+	14  :	op
+	15  :	param t09
+	16  :	t10 = call prints, 1
+	17  :	t11 = 1
+	18  :	c = t11
+	19  :	if c <= n goto 24
+	20  :	goto 32
+	21  :	t14 = c
+	22  :	c = c + 1
+	23  :	goto 19
+	24  :	t15 = 1
+	25  :	t17 = c - t15
+	26  :	t18 = t17 * 4
+	27  :	t19 = &eP
+	28  :	param t19
+	29  :	t20 = call readi, 1
+	30  :	array[t18] = t20
+	31  :	goto 21
+	32  :	t22 = 1
+	33  :	c = t22
+	34  :	if c < n goto 39
+	35  :	goto 72
+	36  :	t25 = c
+	37  :	c = c + 1
+	38  :	goto 34
+	39  :	t26 = 1
+	40  :	d = t26
+	41  :	t29 = n - c
+	42  :	if d <= t29 goto 47
+	43  :	goto 36
+	44  :	t31 = d
+	45  :	d = d + 1
+	46  :	goto 41
+	47  :	t32 = 1
+	48  :	t34 = d - t32
+	49  :	t35 = t34 * 4
+	50  :	t36 = array[t35]
+	51  :	t37 = d * 4
+	52  :	t38 = array[t37]
+	53  :	if t36 > t38 goto 56
+	54  :	goto 44
+	55  :	goto 70
+	56  :	t40 = 1
+	57  :	t42 = d - t40
+	58  :	t43 = t42 * 4
+	59  :	t44 = array[t43]
+	60  :	swap = t44
+	61  :	t46 = 1
+	62  :	t48 = d - t46
+	63  :	t49 = t48 * 4
+	64  :	t50 = d * 4
+	65  :	t51 = array[t50]
+	66  :	array[t49] = t51
+	67  :	t53 = d * 4
+	68  :	array[t53] = swap
+	69  :	goto 44
+	70  :	goto 44
+	71  :	goto 36
+	72  :	op
+	73  :	param t55
+	74  :	t56 = call prints, 1
+	75  :	t57 = 1
+	76  :	c = t57
+	77  :	if c <= n goto 82
+	78  :	goto 92
+	79  :	t60 = c
+	80  :	c = c + 1
+	81  :	goto 77
+	82  :	t61 = 1
+	83  :	t63 = c - t61
+	84  :	t64 = t63 * 4
+	85  :	t65 = array[t64]
+	86  :	param t65
+	87  :	t66 = call printi, 1
+	88  :	op
+	89  :	param t67
+	90  :	t68 = call prints, 1
+	91  :	goto 79
+	92  :	op
+	93  :	param t69
+	94  :	t70 = call prints, 1
+	95  :	t71 = 0
+	96  :	ret t71
+------------------------------

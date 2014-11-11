@@ -1,0 +1,225 @@
+Input file is test3.c
+Assembly file generated is test3.s
+Quads and Symbol Table are stored in quad.log
+
+================================================================================
+Symbol Table: Global                                         Parent: null
+--------------------------------------------------------------------------------
+Name            Type            Category    Init Val    Size    Offset  Nest
+--------------------------------------------------------------------------------
+prints          int             function                4       0       prints
+printi          int             function                4       4       printi
+readi           int             function                4       8       readi
+a               int             local                   4       12      null
+b               int             local       1           4       16      null
+t00             int             temp        1           4       20      null
+c               char            local                   1       24      null
+d               char            local       a           1       25      null
+t01             char            temp        a           1       26      null
+add             int             function                4       27      add
+main            int             function                4       31      main
+--------------------------------------------------------------------------------
+
+================================================================================
+Symbol Table: prints                                         Parent: Global
+--------------------------------------------------------------------------------
+Name            Type            Category    Init Val    Size    Offset  Nest
+--------------------------------------------------------------------------------
+c               ptr(char)       param       ...         4       0       null
+retVal          int             local                   4       4       null
+--------------------------------------------------------------------------------
+
+================================================================================
+Symbol Table: printi                                         Parent: Global
+--------------------------------------------------------------------------------
+Name            Type            Category    Init Val    Size    Offset  Nest
+--------------------------------------------------------------------------------
+i               int             param                   4       0       null
+retVal          int             local                   4       4       null
+--------------------------------------------------------------------------------
+
+================================================================================
+Symbol Table: readi                                          Parent: Global
+--------------------------------------------------------------------------------
+Name            Type            Category    Init Val    Size    Offset  Nest
+--------------------------------------------------------------------------------
+eP              ptr(int)        param                   4       0       null
+retVal          int             local                   4       4       null
+--------------------------------------------------------------------------------
+
+================================================================================
+Symbol Table: add                                            Parent: Global
+--------------------------------------------------------------------------------
+Name            Type            Category    Init Val    Size    Offset  Nest
+--------------------------------------------------------------------------------
+a               int             param                   4       0       null
+b               int             param                   4       4       null
+retVal          int             local                   4       8       null
+ans             int             local                   4       12      null
+c               int             local       2           4       16      null
+t00             int             temp        2           4       20      null
+d               int             local                   4       24      null
+arr             arr(10, int)    local                   40      28      null
+t01             int             temp        10          4       68      null
+p               ptr(int)        local                   4       72      null
+prints          int             local                   4       76      null
+t02             ptr(char)       temp        ...         4       80      null
+t03             int             temp                    4       84      null
+t04             int             temp                    4       88      null
+t05             int             temp                    4       92      null
+t06             int             temp                    4       96      null
+t07             int             temp        2           4       100     null
+t08             int             temp                    4       104     null
+t09             int             temp                    4       108     null
+t10             int             temp                    4       112     null
+t11             int             temp                    4       116     null
+t12             int             temp                    4       120     null
+t13             int             temp                    4       124     null
+t14             ptr(int)        temp                    4       128     null
+t15             ptr(null)       temp                    4       132     null
+t16             int             temp                    4       136     null
+t17             int             temp                    4       140     null
+t18             int             temp                    4       144     null
+t19             int             temp                    4       148     null
+t20             int             temp                    4       152     null
+t21             int             temp                    4       156     null
+t22             int             temp        2           4       160     null
+t23             int             temp                    4       164     null
+t24             int             temp                    4       168     null
+t25             int             temp        8           4       172     null
+t26             int             temp                    4       176     null
+t27             int             temp                    4       180     null
+t28             int             temp                    4       184     null
+t29             ptr(char)       temp        ...         4       188     null
+t30             int             temp                    4       192     null
+--------------------------------------------------------------------------------
+
+================================================================================
+Symbol Table: main                                           Parent: Global
+--------------------------------------------------------------------------------
+Name            Type            Category    Init Val    Size    Offset  Nest
+--------------------------------------------------------------------------------
+retVal          int             local                   4       0       null
+c               int             local       2           4       4       null
+t00             int             temp        2           4       8       null
+d               int             local                   4       12      null
+arr             arr(10, int)    local                   40      16      null
+t01             int             temp        10          4       56      null
+p               ptr(int)        local                   4       60      null
+x               int             local                   4       64      null
+y               int             local                   4       68      null
+z               int             local                   4       72      null
+eP              int             local                   4       76      null
+readi           int             local                   4       80      null
+t02             ptr(int)        temp                    4       84      null
+t03             int             temp                    4       88      null
+t04             int             temp                    4       92      null
+t05             ptr(int)        temp                    4       96      null
+t06             int             temp                    4       100     null
+t07             int             temp                    4       104     null
+add             int             local                   4       108     null
+t08             int             temp                    4       112     null
+t09             int             temp                    4       116     null
+prints          int             local                   4       120     null
+t10             ptr(char)       temp        ...         4       124     null
+t11             int             temp                    4       128     null
+printi          int             local                   4       132     null
+t12             int             temp                    4       136     null
+t13             ptr(char)       temp        ...         4       140     null
+t14             int             temp                    4       144     null
+t15             int             temp                    4       148     null
+a               int             local                   4       152     null
+t16             int             temp                    4       156     null
+t17             int             temp        2           4       160     null
+t18             int             temp                    4       164     null
+t19             int             temp                    4       168     null
+t20             int             temp                    4       172     null
+t21             int             temp                    4       176     null
+t22             int             temp                    4       180     null
+--------------------------------------------------------------------------------
+
+==============================
+Quad Translation
+------------------------------
+	0   :	t00 = 1
+	1   :	b = t00
+	2   :	op
+	3   :	d = t01
+
+add: 
+
+	5   :	t00 = 2
+	6   :	c = t00
+	7   :	t01 = 10
+	8   :	op
+	9   :	param t02
+	10  :	t03 = call prints, 1
+	11  :	t05 = a + b
+	12  :	ans = t05
+	13  :	t07 = 2
+	14  :	d = t07
+	15  :	if a >= d goto 18
+	16  :	goto 21
+	17  :	goto 23
+	18  :	t10 = a
+	19  :	a = a + 1
+	20  :	goto 23
+	21  :	t12 = a + b
+	22  :	c = t12
+	23  :	t14 = &c
+	24  :	p = t14
+	25  :	t16 = *p
+	26  :	b = t16
+	27  :	t18 = a
+	28  :	a = a + 1
+	29  :	t19 = *p
+	30  :	*p = a
+	31  :	t20 = -a
+	32  :	a = t20
+	33  :	t22 = 2
+	34  :	t23 = t22 * 4
+	35  :	arr[t23] = a
+	36  :	t25 = 8
+	37  :	t26 = t25 * 4
+	38  :	t27 = arr[t26]
+	39  :	a = t27
+	40  :	op
+	41  :	param t29
+	42  :	t30 = call prints, 1
+	43  :	ret ans
+
+main: 
+
+	46  :	t00 = 2
+	47  :	c = t00
+	48  :	t01 = 10
+	49  :	t02 = &eP
+	50  :	param t02
+	51  :	t03 = call readi, 1
+	52  :	x = t03
+	53  :	t05 = &eP
+	54  :	param t05
+	55  :	t06 = call readi, 1
+	56  :	y = t06
+	57  :	param x
+	58  :	param y
+	59  :	t08 = call add, 2
+	60  :	z = t08
+	61  :	op
+	62  :	param t10
+	63  :	t11 = call prints, 1
+	64  :	param z
+	65  :	t12 = call printi, 1
+	66  :	op
+	67  :	param t13
+	68  :	t14 = call prints, 1
+	69  :	t15 = d * 4
+	70  :	arr[t15] = a
+	71  :	t17 = 2
+	72  :	t18 = t17 * 4
+	73  :	arr[t18] = a
+	74  :	t20 = c * 4
+	75  :	t21 = arr[t20]
+	76  :	a = t21
+	77  :	ret c
+------------------------------

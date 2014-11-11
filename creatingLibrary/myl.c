@@ -35,12 +35,8 @@ int printi(int n){
 }
 int prints (char* s) {
 	int i=0, bytes;
-	if(s[i] == '\0') bytes =1;
-	else{
-		while(s[i]!='\0') {
-			i++;
-		}
-	}
+	if(s[i] != '\0') 
+		while(s[i]!='\0') i++;
 	bytes = i+1;
 	__asm__ __volatile__ (
 		"movl $4, %%eax \n\t"
@@ -62,7 +58,7 @@ int readi (int* eP) {
 			"int $128 \n\t"
 			:
 			:"c"(&c), "d"(1)
-		) ; // $4: write, $1: on stdin
+		) ; // $3: read, $1: on stdin
 		if (i==0 && c=='-') {
 			sign = -1;
 		}
@@ -79,97 +75,46 @@ int readi (int* eP) {
 }
 int printd (float f) {
 	int a = f/1;
-	printi(a);
+	int sign=1;
+	if (f<0) sign = -1;
+	int ret = 0;
+	ret += printi(a);					// Print integer part
 	char dot[2] =".";
 	prints (dot);
-	int b=0;
 	f = f-a;
-	float g=f;
-	while ( g != 0) {
-		f *= 10;
-		a = f/1;
-		g = f-a;
-	}
-	b=f;
-	printi(b);
-	return OK;
+	f*=sign;
+	while (f-(int)f != 0) f*=10; 		// Ectract decimal part
+	ret += printi(f);					// Print decimal part
+	return ret+1;
 }
-
 int readf (float *fP) {
-	int i=0,j,k,dot=-1,dcount=0;
-	char buff[BUFF];
-	float sum;
-	buff[0]='\0';
-	while(1){
+	int x = 0, frac = 0, zero='0';
+	int i=0, sign=1;
+	char c='\0';
+	while (1) {
 		__asm__ __volatile__ (
 			"movl $3, %%eax \n\t"
 			"movl $0, %%ebx \n\t"
 			"int $128 \n\t"
 			:
-			:"c"(buff+i), "d"(1)
-           ) ;  // $3: read, $1: on stdin
-		if(buff[i]=='\n')
-			break;
-		if(buff[i]==46){
-			dcount++;
-			dot=i;
+			:"c"(&c), "d"(1)
+		) ; // $4: write, $1: on stdin
+		if (i==0 && c=='-') sign = -1;
+		else {
+			if (c=='.') {
+				if (readi(&frac)) return ERR;
+				break;
+			}
+			if (c=='\n') break;
+			if (c>'9' || c<'0') return ERR;
+			x = x*10 + (int) (c - zero);
 		}
 		i++;
 	}
-	if(dcount>=2 || dot==0 || dot==i-1)
-		return ERR;
-	if(dot==-1 && buff[0]=='0')
-		return ERR;
-	int count=i-1;
-	for(i=1;i<=count;i++){
-		if(!(buff[i]>=48 && buff[i]<=57)){
-			if(buff[i]!=46)
-				return ERR;
-		}
-	}
-
-	if(buff[0]=='-'){
-		if(dot==-1){
-			sum=0;
-			for(j=1;j<i;j--){
-				sum+=(buff[j]-48) + sum*10;
-			}
-			sum=sum*(-1);
-			*fP=sum;
-			return OK;
-		}
-		sum=0;k=dot-2;
-		for(j=1;j<=i-1;j++){
-
-			if(buff[j]==46){
-				continue;
-			}
-			sum+=(buff[j]-48)*powerf(10,k);
-			k--;
-		}
-		sum=sum*(-1);
-		*fP=sum;
-		return OK;
-	}
-	else{
-		if(dot==-1){
-			sum=0;
-			for(j=0;j<i;j--){
-				sum+=(buff[j]-48) + sum*10;
-				k++;
-			}
-			*fP=sum;
-			return OK;
-		}
-		sum=0;k=dot-1;
-		for(j=0;j<=i-1;j++){
-			if(buff[j]==46){
-				continue;
-			}
-			sum+=(buff[j]-48)*powerf(10,k);
-			k--;
-		}
-		*fP=sum;
-		return OK;
-	}
+	float f = frac;
+	while ((int)f !=0) f/=10;			// fractional part
+	f+=x;								// int part
+	f*=sign;							// Sign
+	*fP = f;
+	return OK;
 }
