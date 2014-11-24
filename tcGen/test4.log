@@ -110,32 +110,34 @@ x               int             local                   4       64      null
 y               int             local                   4       68      null
 z               int             local                   4       72      null
 eP              int             local                   4       76      null
-readi           int             local                   4       80      null
-t02             ptr(int)        temp                    4       84      null
+prints          int             local                   4       80      null
+t02             ptr(char)       temp        ...         4       84      null
 t03             int             temp                    4       88      null
-t04             int             temp                    4       92      null
-t05             ptr(int)        temp                    4       96      null
-t06             int             temp                    4       100     null
-t07             int             temp                    4       104     null
-add             int             local                   4       108     null
+readi           int             local                   4       92      null
+t04             ptr(int)        temp                    4       96      null
+t05             int             temp                    4       100     null
+t06             int             temp                    4       104     null
+t07             ptr(int)        temp                    4       108     null
 t08             int             temp                    4       112     null
 t09             int             temp                    4       116     null
-prints          int             local                   4       120     null
-t10             ptr(char)       temp        ...         4       124     null
+add             int             local                   4       120     null
+t10             int             temp                    4       124     null
 t11             int             temp                    4       128     null
-printi          int             local                   4       132     null
-t12             int             temp                    4       136     null
-t13             ptr(char)       temp        ...         4       140     null
+t12             ptr(char)       temp        ...         4       132     null
+t13             int             temp                    4       136     null
+printi          int             local                   4       140     null
 t14             int             temp                    4       144     null
-t15             int             temp                    4       148     null
-a               int             local                   4       152     null
-t16             int             temp                    4       156     null
-t17             int             temp        2           4       160     null
+t15             ptr(char)       temp        ...         4       148     null
+t16             int             temp                    4       152     null
+t17             int             temp                    4       156     null
+a               int             local                   4       160     null
 t18             int             temp                    4       164     null
-t19             int             temp                    4       168     null
+t19             int             temp        2           4       168     null
 t20             int             temp                    4       172     null
 t21             int             temp                    4       176     null
 t22             int             temp                    4       180     null
+t23             int             temp                    4       184     null
+t24             int             temp                    4       188     null
 --------------------------------------------------------------------------------
 
 ==============================
@@ -193,33 +195,36 @@ main:
 	46  :	t00 = 2
 	47  :	c = t00
 	48  :	t01 = 10
-	49  :	t02 = &eP
+	49  :	op
 	50  :	param t02
-	51  :	t03 = call readi, 1
-	52  :	x = t03
-	53  :	t05 = &eP
-	54  :	param t05
-	55  :	t06 = call readi, 1
-	56  :	y = t06
-	57  :	param x
-	58  :	param y
-	59  :	t08 = call add, 2
-	60  :	z = t08
-	61  :	op
-	62  :	param t10
-	63  :	t11 = call prints, 1
-	64  :	param z
-	65  :	t12 = call printi, 1
-	66  :	op
-	67  :	param t13
-	68  :	t14 = call prints, 1
-	69  :	t15 = d * 4
-	70  :	arr[t15] = a
-	71  :	t17 = 2
-	72  :	t18 = t17 * 4
-	73  :	arr[t18] = a
-	74  :	t20 = c * 4
-	75  :	t21 = arr[t20]
-	76  :	a = t21
-	77  :	ret c
+	51  :	t03 = call prints, 1
+	52  :	t04 = &eP
+	53  :	param t04
+	54  :	t05 = call readi, 1
+	55  :	x = t05
+	56  :	t07 = &eP
+	57  :	param t07
+	58  :	t08 = call readi, 1
+	59  :	y = t08
+	60  :	param x
+	61  :	param y
+	62  :	t10 = call add, 2
+	63  :	z = t10
+	64  :	op
+	65  :	param t12
+	66  :	t13 = call prints, 1
+	67  :	param z
+	68  :	t14 = call printi, 1
+	69  :	op
+	70  :	param t15
+	71  :	t16 = call prints, 1
+	72  :	t17 = d * 4
+	73  :	arr[t17] = a
+	74  :	t19 = 2
+	75  :	t20 = t19 * 4
+	76  :	arr[t20] = a
+	77  :	t22 = c * 4
+	78  :	t23 = arr[t22]
+	79  :	a = t23
+	80  :	ret c
 ------------------------------

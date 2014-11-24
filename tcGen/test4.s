@@ -31,8 +31,10 @@ t01:
 .LC1:
 	.string	"returning from function\n"
 .LC2:
-	.string	"Sum is equal to "
+	.string	"Enter two numbers to find their sum using a function call\n"
 .LC3:
+	.string	"Sum is equal to "
+.LC4:
 	.string	"\n"
 	.text	
 	movl	$1, %eax
@@ -154,21 +156,18 @@ main:
 	.cfi_offset 5, -8
 	movl 	%esp, %ebp
 	.cfi_def_cfa_register 5
-	subl	$180, %esp
+	subl	$188, %esp
 	movl	$2, %eax
 	movl 	%eax, -8(%ebp)
 	movl	-8(%ebp), %eax
 	movl 	%eax, -4(%ebp)
 	movl	$10, %eax
 	movl 	%eax, -56(%ebp)
-	leal	-76(%ebp), %eax
-	movl 	%eax, -84(%ebp)
+	movl 	$.LC2, -84(%ebp)
 	movl 	-84(%ebp), %eax
 	movl 	%eax, 0(%esp)
-	call	readi
+	call	prints
 	movl	%eax, -88(%ebp)
-	movl	-88(%ebp), %eax
-	movl 	%eax, -64(%ebp)
 	leal	-76(%ebp), %eax
 	movl 	%eax, -96(%ebp)
 	movl 	-96(%ebp), %eax
@@ -176,51 +175,59 @@ main:
 	call	readi
 	movl	%eax, -100(%ebp)
 	movl	-100(%ebp), %eax
+	movl 	%eax, -64(%ebp)
+	leal	-76(%ebp), %eax
+	movl 	%eax, -108(%ebp)
+	movl 	-108(%ebp), %eax
+	movl 	%eax, 0(%esp)
+	call	readi
+	movl	%eax, -112(%ebp)
+	movl	-112(%ebp), %eax
 	movl 	%eax, -68(%ebp)
 	movl 	-64(%ebp), %eax
 	movl 	%eax, 0(%esp)
 	movl 	-68(%ebp), %eax
 	movl 	%eax, 4(%esp)
 	call	add
-	movl	%eax, -112(%ebp)
-	movl	-112(%ebp), %eax
+	movl	%eax, -124(%ebp)
+	movl	-124(%ebp), %eax
 	movl 	%eax, -72(%ebp)
-	movl 	$.LC2, -124(%ebp)
-	movl 	-124(%ebp), %eax
+	movl 	$.LC3, -132(%ebp)
+	movl 	-132(%ebp), %eax
 	movl 	%eax, 0(%esp)
 	call	prints
-	movl	%eax, -128(%ebp)
+	movl	%eax, -136(%ebp)
 	movl 	-72(%ebp), %eax
 	movl 	%eax, 0(%esp)
 	call	printi
-	movl	%eax, -136(%ebp)
-	movl 	$.LC3, -140(%ebp)
-	movl 	-140(%ebp), %eax
+	movl	%eax, -144(%ebp)
+	movl 	$.LC4, -148(%ebp)
+	movl 	-148(%ebp), %eax
 	movl 	%eax, 0(%esp)
 	call	prints
-	movl	%eax, -144(%ebp)
+	movl	%eax, -152(%ebp)
 	movl 	-12(%ebp), %eax
 	imull 	$4, %eax
-	movl 	%eax, -148(%ebp)
-	movl	-148(%ebp), %eax
-	movl	-152(%ebp), %edx
+	movl 	%eax, -156(%ebp)
+	movl	-156(%ebp), %eax
+	movl	-160(%ebp), %edx
 	movl	%edx, -16(%ebp,%eax,1)
 	movl	$2, %eax
-	movl 	%eax, -160(%ebp)
-	movl 	-160(%ebp), %eax
-	imull 	$4, %eax
-	movl 	%eax, -164(%ebp)
-	movl	-164(%ebp), %eax
-	movl	-152(%ebp), %edx
-	movl	%edx, -16(%ebp,%eax,1)
-	movl 	-4(%ebp), %eax
+	movl 	%eax, -168(%ebp)
+	movl 	-168(%ebp), %eax
 	imull 	$4, %eax
 	movl 	%eax, -172(%ebp)
 	movl	-172(%ebp), %eax
+	movl	-160(%ebp), %edx
+	movl	%edx, -16(%ebp,%eax,1)
+	movl 	-4(%ebp), %eax
+	imull 	$4, %eax
+	movl 	%eax, -180(%ebp)
+	movl	-180(%ebp), %eax
 	movl	-16(%ebp,%eax,1), %eax
-	movl 	%eax, -176(%ebp)
-	movl	-176(%ebp), %eax
-	movl 	%eax, -152(%ebp)
+	movl 	%eax, -184(%ebp)
+	movl	-184(%ebp), %eax
+	movl 	%eax, -160(%ebp)
 	movl	-4(%ebp), %eax
 	leave
 	.cfi_restore 5

@@ -158,17 +158,6 @@ postfix_expression
 
  		// Mark that it contains array address and first time computation is done
 		$$->cat = ARR;
-
-//		emit(ARREQ, $$->loc->name, $1->loc->name, t->name);
-/*
-		$$ = new unary();
-		$$->symp = $1->symp;
-		$$->type = $1->type->ptr;
-		sym* t = gentemp(_INT);
-		$$->loc = gentemp();
-		emit(MULT, t->name, $3->symp->name, NumberToString(sizeoftype($$->type)));
-		emit(ARREQ, $$->loc->name, $1->loc->name, t->name);
-*/
 	}
 	| postfix_expression '(' ')'
 	| postfix_expression '(' argument_expression_list ')' {

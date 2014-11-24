@@ -10,7 +10,7 @@ int add (int a, int b) {
 	int ans;
 	int c = 2, d, arr[10];
 	int*p;
-	prints("got into function\n");
+	prints("Got into function\n");
 	ans = a+b;
 	d = 2;
 	if (a>=d) {
@@ -26,7 +26,7 @@ int add (int a, int b) {
 	a = -a;
 	arr[2] = a;
 	a = arr[8];
-	prints("returning from function\n");
+	prints("Returning from function\n");
 	return ans;
 }
 int main () {
@@ -34,6 +34,7 @@ int main () {
 	int*p;
 	int x, y, z;
 	int eP;
+	prints("Enter two numbers to find their sum using a function call\n");
 	x = readi(&eP);
 	y = readi(&eP);
 	z = add(x,y);

@@ -1,20 +1,24 @@
 #include "ass6_12CS10008_translator.h"
 #include <boost/program_options.hpp>
+
 extern FILE *yyin;
 extern vector <string> allstrings;
+
 namespace po = boost::program_options;
-string sfilepath;
-string inputfile;
-ofstream out;
-vector <quad> array;	
-std::map<int, int> labels;
-int gblcount=0;
-string removeExtension(const string filename) {
+
+int gblcount=0;						// Label count in asm file
+std::map<int, int> labels;			// map from quad number to label number
+ofstream out;						// asm file stream
+vector <quad> array;				// quad array
+string sfilepath;					// asm file name
+string inputfile;					// input file name
+
+string removeExtension(const string filename) { // Remove extension from file name
 	size_t lastdot = filename.find_last_of('.');
 	if (lastdot == string::npos) return filename;
 	return filename.substr(0, lastdot); 
 }
-void findlabels() {
+void findlabels() { // Find all the target for labels from the jump statements
 	for (vector<quad>::iterator it = array.begin(); it!=array.end(); it++) {
 		int i;
 		switch (it->op) {
@@ -83,7 +87,7 @@ void genasm() {
 	asmfile << "\t.file	\"test.c\"\n";
 	for (list <sym>::iterator it = table->table.begin(); it!=table->table.end(); it++) {
 		if (it->category!="function") {
-			if (it->type->cat==_CHAR) {
+			if (it->type->cat==_CHAR) { // Global char
 				if (it->init!="") {
 					asmfile << "\t.globl\t" << it->name << "\n";
 					asmfile << "\t.type\t" << it->name << ", @object\n";
@@ -95,7 +99,7 @@ void genasm() {
 					asmfile << "\t.comm\t" << it->name << ",1,1\n";
 				}
 			}
-			if (it->type->cat==_INT) {
+			if (it->type->cat==_INT) { // Global int
 				if (it->init!="") {
 					asmfile << "\t.globl\t" << it->name << "\n";
 					asmfile << "\t.data\n";
