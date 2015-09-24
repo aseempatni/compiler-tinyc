@@ -1,16 +1,20 @@
 ## Instructions
 
 How to make?
-    `make`
+
+    make
 
 How to clean?
-    `make clean`
+
+    make clean
 
 How to run?
-    `./a.out < <testfile>`
+    
+    ./a.out < <testfile>
 
 How to Debug?
-    `./a.out DEBUG < <testfile>`
+    
+    ./a.out DEBUG < <testfile>
 
 
 ## Shortcomings:

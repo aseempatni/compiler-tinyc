@@ -1,3 +1,5 @@
+## Instructions
+
 How to make?
 	
 	make
@@ -28,10 +30,7 @@ To remove unwanted files
 
 	make clean
 
-
---------------------------------------------------------
-
-Shortcomings:
+## Shortcomings:
 
 * According to the doc 0 is not considered a integer constant.
 * Nextlist of last block item is not backpatched. Therefore a return statement is mandatory at the end of a function.
