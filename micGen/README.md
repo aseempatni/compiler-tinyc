@@ -1,18 +1,19 @@
-=== How to make?
-make
+## Instructions
 
-=== How to clean?
-make clean
+How to make?
+    `make`
 
-=== How to run?
-./a.out < <testfile>
+How to clean?
+    `make clean`
 
-=== How to Debug?
-./a.out DEBUG < <testfile>
+How to run?
+    `./a.out < <testfile>`
 
---------------------------------------------------------
+How to Debug?
+    `./a.out DEBUG < <testfile>`
 
-=== Shortcomings:
+
+## Shortcomings:
 
 * According to the doc 0 is not considered a integer constant
 * Nextlist of last block item is not backpatched.
